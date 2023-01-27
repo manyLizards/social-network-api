@@ -2,9 +2,21 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var thoughtSchema = new Schema({
-    thoughtText: String, required: true, //must be between 1 and 280 characters
-    createdAt: Date, //default value = current timestamp(use a getter method to format the timestamp on query)
-    username: String, required: true,
+    thoughtText: {
+        type: String, 
+        required: true, 
+        minLength: 1,
+        maxLength: 280,
+    }, 
+    createdAt: {
+        type: Date, 
+        default: this.createdAt,
+        //(use a getter method to format the timestamp on query)
+    }, 
+    username: {
+        type: String, 
+        required: true,
+    },
     reactions:  //array of nested documents created with the reactionSchema
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 })var mongoose = require('mongoose');
