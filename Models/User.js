@@ -18,3 +18,8 @@ var userSchema = new Schema({
     friends: //reference array of id values from this model
     //create virtual called friendCount that retrieves the length of the user's friends array field on query
 })
+
+
+//export
+const User = mongoose.model('User', userSchema)
+module.exports = User

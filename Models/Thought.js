@@ -10,8 +10,7 @@ var thoughtSchema = new Schema({
     }, 
     createdAt: {
         type: Date, 
-        default: this.createdAt,
-        //(use a getter method to format the timestamp on query)
+        get: (date) => timeSince(date),
     }, 
     username: {
         type: String, 
