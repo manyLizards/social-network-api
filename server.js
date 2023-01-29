@@ -16,5 +16,23 @@ app.use(
 app.use(bodyParser.json());
 
 //Separate Routes for each Resource
-const usersRoute = require("./routes/users");
-const thoughtRoute = require("./routes/thought");
+const usersRoute = require("./routes/users.js"); 
+const thoughtRoute = require("./routes/thought.js");
+
+//control the rate at which user requests are processed by the server
+const limiter = rateLimit({
+    windowsMs: 1 * 60 * 1000, //1 minute
+    max: 30 //30 requests
+});
+
+app.use(limiter);
+
+//mount resource routes
+app.use("./routes/users.js", usersRoute);
+app.use("./routes/thought.js", thoughtRoute);
+
+app.get("/", (req, res) => {
+    res.json({
+        user: ""
+    })
+})
