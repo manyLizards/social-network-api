@@ -37,7 +37,7 @@ var reactionSchema = new Schema({
     createdAt:  {
         type: Date, 
         default: this.createdAt,
-        //use a getter method to format the timestamp on query
+        get: (date) => timeSince(date),
     }
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 })
