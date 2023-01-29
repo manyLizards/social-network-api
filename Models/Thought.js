@@ -17,15 +17,29 @@ var thoughtSchema = new Schema({
         type: String, 
         required: true,
     },
-    reactions:  //array of nested documents created with the reactionSchema
+    reactions: [reactionSchema],
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
-})var mongoose = require('mongoose');
+})
 
 var reactionSchema = new Schema({
-    reactionId: ,//Use Mongoose's ObjectId data type / Default value is set to a new ObjectId
-    reactionBody: String, required: true, //280 character maximum
-    username: String, required: true,
-    createdAt:  Date, //set default value to current timestamp / use a getter method to format the timestamp on query
+    reactionId: {
+        type: ObjectId,
+        default: new ObjectId
+    },
+    reactionBody: {
+        type: String, 
+        required: true, 
+        maxLength: 280,
+    },
+    username: {
+        type: String, 
+        required: true,
+    },
+    createdAt:  {
+        type: Date, 
+        default: this.createdAt,
+        //use a getter method to format the timestamp on query
+    }
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 })
 
