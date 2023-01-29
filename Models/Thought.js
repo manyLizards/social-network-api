@@ -19,7 +19,7 @@ var thoughtSchema = new Schema({
     },
     reactions: [reactionSchema],
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
-})
+});
 
 var reactionSchema = new Schema({
     reactionId: {
@@ -43,4 +43,7 @@ var reactionSchema = new Schema({
     //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 })
 
-//export to user model
+//export
+const Thought = mongoose.model('Thought', thoughtSchema);
+
+module.exports = Thought
