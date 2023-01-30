@@ -52,6 +52,17 @@ const thoughtController = {
             {new: true, runValidators: true })
             .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id) }))
             .catch(err => res.status(400).json(err))
-        }
+    },
+
+    //remove a reaction from thought
+    removeReaction({ params, body }, res) {
+        Thought.findOneAndUpdate (
+            { _id: params.thoughtId },
+            { $push: { reactions: { reactionBody: body.reactionBody, username: body.username} } },
+            { new: true, runValidators: true })
+            .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id) }))
+            .catch(err => res.status(404).json(err))
     }
 }
+
+module.exports = thoughtController
