@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
-var thought = require('./Thought');
+var Thought = require('./Thought');
 var seeds = require('../db/seeds')
 
 var userSchema = new Schema({
@@ -15,11 +15,21 @@ var userSchema = new Schema({
         unique: true, 
         validate: [ isEmail, 'invalid email']
     },
-    thoughts: 
-        //reference thought model array of id values
-    ,
-    friends: //reference array of id values from this model
-    //create virtual called friendCount that retrieves the length of the user's friends array field on query
+    thoughts: {
+        type: Schema.Types.ObjectId,
+        ref: 'Thought'
+    },
+    friends: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
+    ]
+})
+
+//create virtual called friendCount that retrieves the length of the user's friends array field on query
+userSchema.virtual('friendCount').get(function() {
+    return this.friends.length
 })
 
 

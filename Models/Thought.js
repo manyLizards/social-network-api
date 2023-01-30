@@ -16,14 +16,12 @@ var thoughtSchema = new Schema({
         type: String, 
         required: true,
     },
-    reactions: [reactionSchema],
-    //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 });
 
 var reactionSchema = new Schema({
     reactionId: {
-        type: ObjectId,
-        default: new ObjectId
+        type: Schema.Types.ObjectId,
+        default: () => new Types.ObjectId()
     },
     reactionBody: {
         type: String, 
@@ -33,14 +31,19 @@ var reactionSchema = new Schema({
     username: {
         type: String, 
         required: true,
+        maxLength: 280
     },
     createdAt:  {
         type: Date, 
-        default: this.createdAt,
-        get: (date) => timeSince(date),
+        default: Date.now,
+        get: (time) => timeSince(time),
     }
-    //create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
 })
+
+//create virtual called reactionCount that retrieves the length of the thought's reactions array field on query
+thoughtSchema.virtual('reactionCount').get(function() {
+    return this.reactions.length;
+});
 
 //export
 const Thought = mongoose.model('Thought', thoughtSchema);
