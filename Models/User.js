@@ -1,5 +1,7 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var thought = require('./Thought');
+var seeds = require('../db/seeds')
 
 var userSchema = new Schema({
     username: {

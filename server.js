@@ -1,15 +1,13 @@
-//use dotenv for development
-require ("dotenv").config
-
 //establish connection
 const PORT = process.env.PORT || 8082;
 const ENV = process.env.NODE_ENV || "development";
 const express = require("express");
 const app = express();
 const Thought = require ('./models/Thought');
+const mongoose = require('mongoose');
 
 mongoose
-    .connect('mongodb://localhost:27017/test', {
+    .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/test', {
         useNewUrlParser: true, useUnifiedTopology: true
     })
     .then(() => {
@@ -18,6 +16,8 @@ mongoose
     .catch((err) => {
         console.log(err);
     });
+
+mongoose.set('debug', true)
 
 //setting up express
 app.use(
@@ -30,6 +30,8 @@ app.use(bodyParser.json());
 //Separate Routes for each Resource
 const usersRoute = require("./routes/users.js"); 
 const thoughtRoute = require("./routes/thought.js");
+app.use(usersRoute);
+app.use(thoughtRoute);
 
 //control the rate at which user requests are processed by the server
 const limiter = rateLimit({
@@ -39,12 +41,13 @@ const limiter = rateLimit({
 
 app.use(limiter);
 
-//mount resource routes
-app.use("./routes/users.js", usersRoute);
-app.use("./routes/thought.js", thoughtRoute);
-
 app.get("/", (req, res) => {
     res.json({
         user: ""
     })
+})
+
+//Server Listen
+app.listen(PORT, () => {
+    console.log((`Connected on localhost:${PORT}`))
 })

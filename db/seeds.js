@@ -16,17 +16,17 @@ mongoose
 //seed thoughts
 const seedThoughts = [
     {
-        thoughtText: "Cool!"
+        thoughtText: "I'm so cool",
         userName: "coolguy1",
         reactions: //finish once you have reaction schema
     },
     {
-        thoughtText: "Wow!",
+        thoughtText: "America heck yea",
         userName: "WeThePeople",
         reactions: //finish once you have reaction schema
     },
     {
-        thoughtText: "Interesting...",
+        thoughtText: "Science is fun!",
         userName: "professorSmartyPants",
         reactions: //finish once you have reaction schema
     }
