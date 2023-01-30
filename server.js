@@ -1,6 +1,5 @@
 //establish connection
-const PORT = process.env.PORT || 8082;
-const ENV = process.env.NODE_ENV || "development";
+const PORT = process.env.PORT || 3001;
 const express = require("express");
 const app = express();
 const Thought = require ('./models/Thought');
@@ -26,6 +25,8 @@ app.use(
     })
 );
 app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //Separate Routes for each Resource
 const usersRoute = require("./routes/users.js"); 
