@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const Thought = require('../Models/Thought')
-const User = require('../Models/User')
+const Thought = require('../../Models/Thought')
+const User = require('../../Models/User')
 
 mongoose
     .connect('mongodb://localhost:27017/test', {

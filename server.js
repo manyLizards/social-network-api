@@ -4,6 +4,7 @@ const express = require("express");
 const app = express();
 const Thought = require ('./models/Thought');
 const mongoose = require('mongoose');
+const User = require('./Models/User')
 
 mongoose
     .connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/test', {
@@ -44,7 +45,7 @@ app.use(limiter);
 
 app.get("/", (req, res) => {
     res.json({
-        user: ""
+        user: 
     })
 })
 
@@ -52,3 +53,4 @@ app.get("/", (req, res) => {
 app.listen(PORT, () => {
     console.log((`Connected on localhost:${PORT}`))
 })
+

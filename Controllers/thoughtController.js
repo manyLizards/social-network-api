@@ -1,5 +1,5 @@
 const bodyParser = require('body-parser');
-const { Thought, User } = require('../models');
+const { Thought, User, Reaction } = require('../models');
 const thought404Message = (id) => `Thought with ID: ${id} not found.`
 const thought200Message = (id) => `Thought with ID: ${id} has been deleted.`
 const reaction200Message = (id) => `Reaction with ID: ${id} has been deleted.`
@@ -8,8 +8,8 @@ const thoughtController = {
     //get all thoughts
     getAllThoughts(req, res) {
         Thought.find({})
-        .populate({ path: 'reactions', select: '-_v' })
-        .select('-_v')
+        .populate({ path: 'reactions', select: '__v' })
+        .select('__v')
         .then(dbThoughtData => res.json(dbThoughtData))
         .catch(err => res.status(500).json(err))
     },
@@ -17,7 +17,7 @@ const thoughtController = {
     //get one thought by ID
     getThoughtById({ params }, res) {
         Thought.findOne({_id: params.id})
-        .populate({ path: 'reactions', select: '-_v' })
+        .populate({ path: 'reactions', select: '__v' })
         .then(dbThoughtData => dbThoughtData ? res.json(dbThoughtData) : res.status(404).json({ message: thought404Message(params.id)}))
         .catch(err => res.status(404).json(err))
     },
